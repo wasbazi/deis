@@ -55,9 +55,9 @@ Vagrant.configure("2") do |config|
   # always use Vagrants insecure key
   config.ssh.insert_key = false
 
-  config.vm.box = "coreos-%s" % $update_channel
-  config.vm.box_version = ">= 647.2.0"
-  config.vm.box_url = "http://%s.release.core-os.net/amd64-usr/current/coreos_production_vagrant.json" % $update_channel
+  config.vm.box = "deis/coreos-%s" % $update_channel
+  # config.vm.box_version = ">= 647.2.0"
+  # config.vm.box_url = "http://%s.release.core-os.net/amd64-usr/current/coreos_production_vagrant.json" % $update_channel
 
   ["vmware_fusion", "vmware_workstation"].each do |vmware|
     config.vm.provider vmware do |v, override|
@@ -151,7 +151,9 @@ Vagrant.configure("2") do |config|
           s.path = File.join(File.dirname(__FILE__), "contrib", "util", "check-user-data.sh")
           s.args = ["/tmp/vagrantfile-user-data", $num_instances]
         end
+        config.vm.provision :shell, :inline => "mkdir -p /var/lib/coreos-vagrant", :privileged => true
         config.vm.provision :shell, :inline => "mv /tmp/vagrantfile-user-data /var/lib/coreos-vagrant/", :privileged => true
+        config.vm.provision :shell, :inline => "coreos-cloudinit --from-file /var/lib/coreos-vagrant/vagrantfile-user-data", :privileged => true
       else
         config.vm.provision :shell do |s|
           s.inline = "echo \"File not found: #{CLOUD_CONFIG_PATH}\" &&" +

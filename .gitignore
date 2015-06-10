@@ -75,3 +75,7 @@ contrib/gce/gce-user-data
 # vagrant local config and droppings
 /config.rb
 .vagrant
+
+# packer cache and buils
+packer/packer_cache
+packer/builds
