@@ -151,9 +151,8 @@ Vagrant.configure("2") do |config|
           s.path = File.join(File.dirname(__FILE__), "contrib", "util", "check-user-data.sh")
           s.args = ["/tmp/vagrantfile-user-data", $num_instances]
         end
-        config.vm.provision :shell, :inline => "mkdir -p /var/lib/coreos-vagrant", :privileged => true
-        config.vm.provision :shell, :inline => "mv /tmp/vagrantfile-user-data /var/lib/coreos-vagrant/", :privileged => true
-        config.vm.provision :shell, :inline => "coreos-cloudinit --from-file /var/lib/coreos-vagrant/vagrantfile-user-data", :privileged => true
+        config.vm.provision :shell, :inline => "mv /tmp/vagrantfile-user-data /usr/share/oem/cloud-config.yml", :privileged => true
+        config.vm.provision :shell, :inline => "coreos-cloudinit --from-file /usr/share/oem/cloud-config.yml", :privileged => true
       else
         config.vm.provision :shell do |s|
           s.inline = "echo \"File not found: #{CLOUD_CONFIG_PATH}\" &&" +

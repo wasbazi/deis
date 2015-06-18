@@ -73,8 +73,8 @@
   ],
   "variables": {
     "channel": "stable",
-    "version": "current",
+    "version": "647.2.0",
     "checksum_type": "md5",
-    "checksum": "560f13071604d492e19bbc9f0818713a"
+    "checksum": "adef94fabf7c3573b37b35fc7cf7ff2c"
   }
 }
